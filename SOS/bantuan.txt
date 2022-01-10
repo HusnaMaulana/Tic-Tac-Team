@@ -1,0 +1,30 @@
+======== BANTUAN ========
+
+SEBELUM PERMAINAN DIMULAI:
+1. Pilih mode atau pilih lawan permainan, dapat melawan AI atau melawan sesama player
+
+2. Pilih level atau tingkat kesulitan yang akan menentukan ukuran papan
+- easy 3x3
+- normal 5x5
+- hard 8x8
+
+3. Masukan nama player
+
+4. Jika memilih mode melawan sesama player maka Player 1 atau P1 akan mendapat kesempatan untuk menentukan gilirannya
+
+==========================================================
+
+CARA BERMAIN :
+1. Pilih nomor kotak dari papan yang belum terisi
+| 1 | 2 | 3 |
+| 4 | 5 | 6 |
+| 7 | 8 | 9 |
+
+2. Masukkan huruf S atau O
+| 1 | 2 | 3 |
+| S | 5 | 6 |
+| 7 | 8 | 9 |
+
+3. Tunggu giliran anda selanjutnya
+
+4. Ketika berhasil membuat satu garis SOS maka akan mendapat 1 poin
