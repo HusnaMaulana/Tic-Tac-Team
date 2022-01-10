@@ -83,7 +83,7 @@ void prep(){
 }
 
 void start(){
-	int turn=1,kotak,sos;
+	int turn=1,kotak;
 	char huruf;
 	
 	// jika multiplayer
