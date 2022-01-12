@@ -11,7 +11,7 @@ struct pemain{
 	int poin=0;
 }p1,p2;
 
-struct temp{
+struct temp{ // tipe data temporary yang khusus berisi inputan terbaru pemain saat permainan berjalan
 	char huruf;
 	int kotak;
 }temp;
@@ -32,6 +32,7 @@ void cariIndex(int kotak, int &row, int &col);
 void cekSOS(pemain &p);
 void AI();
 void tampilTutor();
+void clearGame();
 int cariSS();
 int cariSO();
 int pilihMode();
@@ -64,6 +65,11 @@ int main(){
 }
 
 void prep(){
+	/*
+		modul persiapan yang akan menentukan bagaimana permainan yang akan dimainkan
+		yaitu memilih lawan, ukuran papan, dan giliran
+	*/
+	
 	system("cls");
 	mode = pilihMode();
 	printf("\n");
@@ -83,6 +89,8 @@ void prep(){
 }
 
 void start(){
+	// modul ketika permainan berjalan
+	
 	int turn=1,kotak;
 	char huruf;
 	
@@ -153,7 +161,7 @@ void start(){
 		}while(turn<=n*n);
 	}
 	
-	// LAWAN AI
+	// JIKA MELAWAN AI
 	else {
 		do{
 			system("cls");
@@ -189,6 +197,8 @@ void start(){
 }
 
 void finish(){
+	// modul ketika permainan berakhir yang akan menampilkan pemenang
+	
 	system("cls");
 	
 	char c;
@@ -199,6 +209,8 @@ void finish(){
 	cariPemenang();
 	
 	printf("\n\nPOIN AKHIR\n%s : %d  ||  %s : %d",p1.nama,p1.poin,p2.nama,p2.poin);
+	
+	clearGame();
 	
 	// untu kembali ke main menu
 	printf("\n\nKlik ENTER untuk kembali ke menu utama");
@@ -232,6 +244,7 @@ int pilihLevel(){
 
 void addNama(int mode){
 	char nama[20];
+	
 	if(mode==1){
 		strcpy(p2.nama, "AI");
 		printf("\nMasukan nama : ");
@@ -272,6 +285,8 @@ void pilihGiliran(int mode){
 }
 
 void tampilPapan(){
+	// modul untuk menampilkan papan
+	
 	int no=0;
 	
 	printf(" ");
@@ -284,7 +299,7 @@ void tampilPapan(){
 		printf("| ");
 		for(int j=0;j<n;j++){
 			no++;
-			if(papan[i][j]=='\0'){
+			if(papan[i][j]=='\0'){ // jika array kosong maka akan diisi dengan nomor kotak
 				printf("%d\t| ",no);
 			}else{
 				printf("%c\t| ",papan[i][j]);
@@ -299,6 +314,11 @@ void tampilPapan(){
 }
 
 void cariIndex(int kotak, int &row, int &col){
+	/*
+		mencari index array dari nomor kotak yang dikirim
+		misal: nomor kotak 1 maka state row<-1 dan col<-1
+	*/
+	
 	int no=0,i,j;
 	
 	for(i=0;i<n;i++){
@@ -318,19 +338,25 @@ void cariIndex(int kotak, int &row, int &col){
 }
 
 void addHuruf(int kotak, char huruf){
+	// modul untuk memasukkan huruf ke dalam papan
+	
 	int row,col;
 	
 	cariIndex(kotak,row,col);
 	papan[row][col]=toupper(huruf);
 	
+	// inputan terbaru yaitu lokasi dan huruf terbaru di simpan ke dalam struct temp
 	temp.huruf=huruf;
 	temp.kotak=kotak;
 }
 
 int cekInput(int kotak, char huruf){	
 	/*
-	VALID = 0
-	INVALID = 1
+		modul untuk memeriksa apakah inputan player berada di kotak kosong
+		dan merupakan huruf S atau O
+		
+		VALID = 0
+		INVALID = 1
 	*/
 	
 	int row,col;
@@ -354,6 +380,8 @@ int cekInput(int kotak, char huruf){
 }
 
 void cekSOS(pemain &p){
+	// memeriksa apakah inputan terbaru player membuat S O S sebaris
+	
 	int row, col;
 	
 	cariIndex(temp.kotak,row,col);
@@ -420,10 +448,14 @@ void cekSOS(pemain &p){
 }
 
 void hitungPoin(pemain &p){
+	// modul untuk menambahkan 1 kepada poin pemain
+	
 	p.poin++;
 }
 
 void cariPemenang(){
+	//	modul untuk mencari pemenang dengan mencari nilai maks dari poin kedua pemain
+	
 	
 	printf("\nPEMENANG ADALAH...\n");
 	sleep(2);
@@ -439,6 +471,11 @@ void cariPemenang(){
 }
 
 void AI(){
+	/* 	
+		modul untuk menentukan pergerakan AI akan mengisi kotak apa
+		dan huruf apa yang akan dimasukkan ke papan
+	*/
+	
 	int kotak;
 	char huruf;
 	
@@ -476,6 +513,8 @@ void AI(){
 }
 
 int cariSO(){
+	// memeriksa tiap-tiap kotak kosong apakah segaris dengan huruf S O
+	
 	int i,j,kotak=0;
 	
 	for(i=0;i<n;i++){
@@ -511,6 +550,8 @@ int cariSO(){
 }
 
 int cariSS(){
+	// memeriksa tiap tiap kotak kosong apakah berada segaris diantara 2 huruf S
+	
 	int i,j,kotak=0;
 	
 	for(i=0;i<n;i++){
@@ -537,6 +578,8 @@ int cariSS(){
 }
 
 void tampilTutor(){
+	// menampilkan bantuan.txt ke console
+	
 	system("cls");
 	
 	FILE *FF;
@@ -558,4 +601,17 @@ void tampilTutor(){
     if(c==0x0A){
     	main();
 	}
+}
+
+void clearGame(){
+	//	modul untuk membersihkan papan dan mereset poin
+	
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			papan[i][j]='\0';
+		}
+	}
+	
+	p1.poin=0;
+	p2.poin=0;
 }
